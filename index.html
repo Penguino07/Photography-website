@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AP Photos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="site-header">
+    <a class="wordmark" href="#top" id="top">Alexander Prifti</a>
+    <nav class="site-nav" aria-label="Main">
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Introduction">
+      <h1 class="statement">Capturing the view of what we can only remember</h1>
+      <div class="media-slot" data-hero></div>
+    </section>
+
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="section-head">
+        <h2 id="work-title">Photographs</h2>
+        <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="media-slot" data-portrait></div>
+      <div class="about-text">
+        <h2 id="about-title">About Me</h2>
+        <p class="lead">Mainly started as a hobby and still working my way up.</p>
+        <p>A current college student seeking for a B.S. in Computer Science. Have been doing photography as a hobby for 2 years, capturing moments such as hangouts, school trips, sports, and many wonderful memories. </p>
+      </div>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-meta">
+        
+        <span>Based in Las Vegas</span>
+        <a href="https://www.instagram.com/ap_penguino/" rel="noopener">Instagram</a>
+        <span>Messages Open on Instagram.</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; <span id="year"></span> AP Photography</span>
+    <span>All images are copyrighted but I mean, why would you even take them to begin with.</span>
+  </footer>
+</div>
+
+<dialog id="lightbox" aria-label="Photo viewer">
+  <div class="lb-inner">
+    <div class="lb-top">
+      <span class="lb-count" id="lb-count"></span>
+      <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="lb-stage" id="lb-stage"></div>
+    <div class="lb-bottom">
+      <div class="lb-caption" id="lb-caption"></div>
+      <div class="lb-controls">
+        <button class="lb-nav" id="lb-prev" aria-label="Previous photo">&larr;</button>
+        <button class="lb-nav" id="lb-next" aria-label="Next photo">&rarr;</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+/*
+  HOW TO USE
+  Change the colors in :root to match your work.
+  Fonts are loaded in index.html. Change them there and here (--serif, --sans).
+*/
+
+:root {
+  box-sizing: border-box;
+  --paper: #E9E6DF;
+  --ink: #161514;
+  --muted: #6F6B63;
+  --hair: #CBC6BC;
+  --accent: #5E1F24;
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --pad: clamp(20px, 5vw, 64px);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #151413;
+    --ink: #a47008;
+    --muted: #A29D93;
+    --hair: #3A3834;
+    --accent: #D8A7A9;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #151413;
+  --ink: #EDEAE4;
+  --muted: #A29D93;
+  --hair: #3A3834;
+  --accent: #D8A7A9;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px 32px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+.wordmark {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+.site-nav { display: flex; gap: 28px; }
+.site-nav a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  color: var(--muted);
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+.site-nav a:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Hero */
+.hero { padding-top: clamp(40px, 8vw, 96px); }
+.statement {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.6rem, 7.5vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin: 0 0 clamp(40px, 6vw, 72px);
+  max-width: 14ch;
+}
+.statement em { font-style: italic; }
+.hero-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 80vh;
+  object-fit: cover;
+}
+
+/* Work */
+.section { padding-top: clamp(72px, 10vw, 140px); }
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px 32px;
+  margin-bottom: 32px;
+}
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button {
+  background: none;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.filters button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.grid { columns: 3 300px; column-gap: 20px; }
+.tile {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0 0 20px;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  break-inside: avoid;
+}
+.fill, .placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+.tile:hover .fill { opacity: 0.88; }
+.placeholder { min-height: 100%; }
+
+/* About */
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+.about h2 { margin-bottom: 28px; font-weight: bold;}
+.portrait { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.about-text p {
+  color: #A29D93;
+  max-width: 60ch;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  margin: 0 0 1.2em;
+}
+.about-text .lead {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+/* Contact */
+.contact-meta {
+  margin-top: 24px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+}
+.contact-meta a { color: var(--ink); }
+
+/* Footer */
+.site-footer {
+  margin-top: clamp(96px, 12vw, 160px);
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--hair);
+  color: var(--muted);
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+/* Lightbox */
+dialog {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+}
+dialog::backdrop { background: rgba(10, 10, 9, 0.92); }
+.lb-inner {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 16px var(--pad);
+  color: #EDEAE4;
+}
+.lb-top { display: flex; justify-content: space-between; align-items: center; }
+.lb-count { font-size: 0.875rem; opacity: 0.7; }
+.lb-close, .lb-nav {
+  background: none;
+  border: 1px solid rgba(237, 234, 228, 0.3);
+  color: #EDEAE4;
+  border-radius: 999px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.lb-close:hover, .lb-nav:hover { border-color: #EDEAE4; }
+.lb-stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+.frame {
+  width: min(100%, 1100px);
+  max-height: 100%;
+  aspect-ratio: var(--ratio, 4 / 3);
+  object-fit: contain;
+}
+.lb-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 12px;
+}
+.lb-caption { font-family: var(--serif); font-size: 1.15rem; }
+.lb-caption span { font-family: var(--sans); font-size: 0.875rem; opacity: 0.7; margin-left: 8px; }
+.lb-controls { display: flex; gap: 8px; }
+
+/* Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Small screens */
+@media (max-width: 760px) {
+  .about { grid-template-columns: 1fr; }
+  .site-nav { gap: 20px; }
+}
