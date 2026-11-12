@@ -25,8 +25,9 @@ import shutil
 import sys
 from pathlib import Path
 from urllib.parse import quote
+from math import gcd
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 SITE_DIR = Path(__file__).resolve().parent
 PHOTO_FOLDER = "photos"
@@ -56,6 +57,9 @@ def read_category_and_title(stem: str):
         return category.strip(), title.strip()
     return "Uncategorized", stem.strip()
 
+def aspect_ratio(width, height):
+    d = gcd(width, height)
+    return f"{width // d} / {height // d}"
 
 def main():
     if len(sys.argv) < 2:
@@ -78,10 +82,13 @@ def main():
         category, title = read_category_and_title(file.stem)
 
         with Image.open(file) as img:
+            img = ImageOps.exif_transpose(img)
             width, height = img.size
+            print(title)
+            print(img.size)
+            print(str(width) + ":" + str(height) + "\n")
             year = read_year(file, img)
-
-        ratio = "4 / 5" if height > width else "3 / 2"
+            ratio = aspect_ratio(width, height)
 
         shutil.copy2(file, out_dir / file.name)
 

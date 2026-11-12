@@ -5,9 +5,7 @@
 // category: use any name you like (Sports, Nature, Portrait, Street, Events...).
 // Filter buttons are created automatically from the category names you use.
 // src: your image link. Leave "" to show a colored placeholder.
-const TONE = "#ffffff";
 import {PHOTOS as f} from "./photos.js";
-console.log(f[0]);
 const PHOTOS = f;
 
 // Index of the photo shown at the top of the page.
@@ -46,7 +44,7 @@ function media(p, cls) {
 }
 
 function renderHero() {
-  const p = PHOTOS[HERO_INDEX];
+  const p = { title: "Sunlight Sunset Vegas", category: "LandScape", year: "2025", ratio: "3 / 2", src: "https://cdn.discordapp.com/attachments/916851203328081931/1570325719291138168/DSC09074.JPG?ex=6af6af4a&is=6af55dca&hm=fe92f0d711c991dc43b122941a38874343cab1b6e1bf623abd07023f63155459&" };
   const el = media(p, 'hero-image');
   el.setAttribute('alt', p.title);
   document.querySelector('[data-hero]').appendChild(el);
