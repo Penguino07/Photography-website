@@ -12,7 +12,7 @@ const PHOTOS = f;
 const HERO_INDEX = 0;
 
 // Portrait photo for the About section. Put your image link here, or leave "".
-const PORTRAIT_SRC = "https://cdn.discordapp.com/attachments/916851203328081931/1569998850876243978/IMG_1042.png?ex=6af57edf&is=6af42d5f&hm=c41e8c54af525441d5d2f1bb2b04b264a80e9a5dbe72e2aad363dea035cff37f&";
+const PORTRAIT_SRC = "edit.png";
 
 /* ---------------------------------- */
 
