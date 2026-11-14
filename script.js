@@ -44,7 +44,7 @@ function media(p, cls) {
 }
 
 function renderHero() {
-  const p = { title: "Sunlight Sunset Vegas", category: "LandScape", year: "2025", ratio: "3 / 2", src: "https://cdn.discordapp.com/attachments/916851203328081931/1570325719291138168/DSC09074.JPG?ex=6af6af4a&is=6af55dca&hm=fe92f0d711c991dc43b122941a38874343cab1b6e1bf623abd07023f63155459&" };
+  const p = { title: "Sunlight Sunset Vegas", category: "LandScape", year: "2025", ratio: "3 / 2", src: "Showcase.png" };
   const el = media(p, 'hero-image');
   el.setAttribute('alt', p.title);
   document.querySelector('[data-hero]').appendChild(el);
