@@ -16,14 +16,20 @@ const PORTRAIT_SRC = "edit.png";
 
 /* ---------------------------------- */
 
+// How many photos are shown per page in the grid.
+const PAGE_SIZE = 10;
+
 const grid = document.getElementById('grid');
 const filters = document.getElementById('filters');
+const pager = document.getElementById('pager');
 const dialog = document.getElementById('lightbox');
 const stage = document.getElementById('lb-stage');
 const caption = document.getElementById('lb-caption');
 const counter = document.getElementById('lb-count');
-let visible = [];
+let visible = [];   // photos on the current page (used by the lightbox)
 let current = 0;
+let activeFilter = 'All';
+let page = 1;
 
 // Builds either an <img> (if src is set) or a colored placeholder block.
 function media(p, cls) {
@@ -68,18 +74,72 @@ function renderPortrait() {
   }
 }
 
-// Shows photos in the grid, optionally only one category.
-function render(filter = 'All') {
-  visible = PHOTOS.filter(p => filter === 'All' || p.category === filter);
-  grid.replaceChildren(...visible.map((p, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'tile';
-    btn.style.aspectRatio = p.ratio;
-    btn.setAttribute('aria-label', 'Open ' + p.title);
+// Builds one grid tile. A shimmer skeleton sits over the photo until it has loaded.
+function tile(p, i) {
+  const btn = document.createElement('button');
+  btn.className = 'tile';
+  btn.style.aspectRatio = p.ratio;
+  btn.setAttribute('aria-label', 'Open ' + p.title);
+  btn.addEventListener('click', () => openAt(i));
+
+  if (!p.src) {
     btn.appendChild(media(p, 'fill'));
-    btn.addEventListener('click', () => openAt(i));
     return btn;
-  }));
+  }
+
+  const skeleton = document.createElement('span');
+  skeleton.className = 'skeleton';
+  skeleton.setAttribute('aria-hidden', 'true');
+
+  const img = media(p, 'fill');
+  img.classList.add('is-loading');
+  const done = () => { img.classList.remove('is-loading'); skeleton.remove(); };
+  img.addEventListener('load', done, { once: true });
+  img.addEventListener('error', done, { once: true });
+
+  btn.append(skeleton, img);
+  return btn;
+}
+
+// Shows the current page of the active category in the grid.
+function render() {
+  const filtered = PHOTOS.filter(p => activeFilter === 'All' || p.category === activeFilter);
+  const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  page = Math.min(page, pages);
+
+  const start = (page - 1) * PAGE_SIZE;
+  visible = filtered.slice(start, start + PAGE_SIZE);
+  grid.replaceChildren(...visible.map((p, i) => tile(p, i)));
+  renderPager(pages);
+}
+
+// Page buttons: Prev, one per page, Next. Hidden when everything fits on one page.
+function renderPager(pages) {
+  pager.hidden = pages <= 1;
+  if (pages <= 1) return;
+
+  const button = (label, target, { aria = label, disabled = false, current = false } = {}) => {
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.setAttribute('aria-label', aria);
+    b.disabled = disabled;
+    if (current) b.setAttribute('aria-current', 'page');
+    b.addEventListener('click', () => goTo(target));
+    return b;
+  };
+
+  const items = [button('← Prev', page - 1, { aria: 'Previous page', disabled: page === 1 })];
+  for (let n = 1; n <= pages; n++) {
+    items.push(button(String(n), n, { aria: 'Page ' + n, current: n === page }));
+  }
+  items.push(button('Next →', page + 1, { aria: 'Next page', disabled: page === pages }));
+  pager.replaceChildren(...items);
+}
+
+function goTo(n) {
+  page = n;
+  render();
+  document.getElementById('work').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function showCurrent() {
@@ -117,7 +177,9 @@ categories.forEach((c, i) => {
   b.addEventListener('click', () => {
     filters.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false'));
     b.setAttribute('aria-pressed', 'true');
-    render(c);
+    activeFilter = c;
+    page = 1;
+    render();
   });
   filters.appendChild(b);
 });
